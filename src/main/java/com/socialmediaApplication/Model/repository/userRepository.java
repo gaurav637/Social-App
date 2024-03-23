@@ -1,5 +1,9 @@
 package com.socialmediaApplication.Model.repository;
 
-public class userRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.socialmediaApplication.Model.User;
+
+public interface userRepository extends JpaRepository<User,Integer> {
 
 }
