@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.socialmediaApplication.Exception.ResourceNotFoundException;
 import com.socialmediaApplication.Model.User;
 import com.socialmediaApplication.Model.repository.userRepository;
+import com.socialmediaApplication.Payload.getUserByEmailDto;
 import com.socialmediaApplication.Payload.userDto;
 import com.socialmediaApplication.allServices.userService;
 
@@ -76,4 +77,12 @@ public class userServiceImple implements userService{
 		userDto userdto = this.modelMap.map(user, userDto.class);
 		return userdto;
 	}
+
+	@Override
+	public getUserByEmailDto getUserByemail(getUserByEmailDto email) {
+		getUserByEmailDto user = uRepository.findUserByEmail(email);
+		return user;
+	}
+
+	
 }
