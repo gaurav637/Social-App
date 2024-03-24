@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.socialmediaApplication.Payload.ApiResponse;
+import com.socialmediaApplication.Payload.getUserByEmailDto;
 import com.socialmediaApplication.Payload.userDto;
 import com.socialmediaApplication.allServices.userService;
+import jakarta.validation.Valid;
 
 @RestController
 public class userController {
@@ -22,7 +24,7 @@ public class userController {
 	private userService uService;
 	
 	@PostMapping("new/user")
-	public ResponseEntity<userDto> createUserInController(@RequestBody userDto uDto){
+	public ResponseEntity<userDto> createUserInController(@Valid @RequestBody userDto uDto){
 		userDto createdUserDto = this.uService.createUser(uDto);
 		return new ResponseEntity<userDto>(createdUserDto,HttpStatus.CREATED);
 	}
@@ -40,7 +42,7 @@ public class userController {
 	}
 	
 	@PutMapping("update-user/{userId}")
-	public ResponseEntity<userDto> updateUserInController(@RequestBody userDto udto,@PathVariable("userId") int id){
+	public ResponseEntity<userDto> updateUserInController(@Valid @RequestBody userDto udto,@PathVariable("userId") int id){
 		userDto updateUser = this.uService.updateUser(udto, id);
 		return new ResponseEntity<userDto>(updateUser,HttpStatus.OK);
 	}
@@ -50,5 +52,12 @@ public class userController {
 		this.uService.deleteUser(id);
 		return new ApiResponse("user is deleted...", true);
 	}
+	
+	@GetMapping("get-user-by-email")
+	public ResponseEntity<getUserByEmailDto> getUserByEmailInController(@RequestBody getUserByEmailDto email) {
+		getUserByEmailDto us = this.uService.getUserByemail(email);
+		return new ResponseEntity<getUserByEmailDto>(us,HttpStatus.OK);
+	}
 
+	
 }
