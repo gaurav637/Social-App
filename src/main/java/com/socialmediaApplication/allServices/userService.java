@@ -1,12 +1,12 @@
 package com.socialmediaApplication.allServices;
 
 import java.util.List;
-import com.socialmediaApplication.Model.User;
+import com.socialmediaApplication.Payload.userDto;
 
 public interface userService {
-	public User createUser(User user);
-	public List<User> getAllUser();
-	public User getUserById(int id);
-	public User updateUser(User user,int id);
+	public userDto createUser(userDto user);
+	public List<userDto> getAllUser();
+	public userDto getUserById(int id);
+	public userDto updateUser(userDto user,int id);
 	public void deleteUser(int id);
 }
