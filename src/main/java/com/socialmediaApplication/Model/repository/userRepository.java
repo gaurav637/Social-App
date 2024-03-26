@@ -8,3 +8,4 @@ public interface userRepository extends JpaRepository<User,Integer> {
 
 	public getUserByEmailDto findUserByEmail(getUserByEmailDto email);
 }
+ 

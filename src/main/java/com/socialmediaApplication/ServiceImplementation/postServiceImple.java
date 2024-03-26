@@ -1,0 +1,155 @@
+package com.socialmediaApplication.ServiceImplementation;
+
+import java.util.List;
+import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.socialmediaApplication.Exception.ResourceNotFoundException;
+import com.socialmediaApplication.Model.Post;
+import com.socialmediaApplication.Model.User;
+import com.socialmediaApplication.Model.repository.postRepository;
+import com.socialmediaApplication.Model.repository.userRepository;
+import com.socialmediaApplication.allServices.postServices;
+
+@Service
+public class postServiceImple implements postServices {
+
+	
+    private static final Logger logger = Logger.getLogger(postServiceImple.class.getName());
+
+    @Autowired
+    private postRepository pRepository;
+    
+    @Autowired
+    private userRepository uRepository;
+
+    @Override
+    public Post createPost(Post post) {
+        try {
+            Post newPost = pRepository.save(post);
+            logger.info("Post Created Successfully with Id : " + newPost.getPostId());
+            return newPost;
+        } catch (Exception e) {
+            logger.severe("Failed to create post: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public Post getPostById(int id) {
+    	Post post = pRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Post","Id",id));
+        return post;
+    }
+
+    @Override
+    public List<Post> getAllPosts() {
+    	try {
+    		List<Post> allPosts = pRepository.findAll();
+    		logger.info("Successfully get all post ");
+        	return allPosts;
+    	}catch(Exception e) {
+    		logger.severe("Failed to get all post");
+    		throw e;
+    	}
+     }
+
+    @Override
+    public Post updatePost(Post post, int id) {
+        try {
+        	Post updatedPost = pRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Post","Id",id));
+            updatedPost.setUser(post.getUser());
+            updatedPost.setTimestamp(post.getTimestamp());
+            updatedPost.setPostId(post.getPostId());
+            updatedPost.setLocation(post.getLocation());
+            updatedPost.setLikesCounter(post.getLikesCounter());
+            updatedPost.setLikes(post.getLikes());
+            updatedPost.setContent(post.getContent());
+            updatedPost.setComments(post.getComments());
+            updatedPost.setCommentCounter(post.getCommentCounter());
+            Post post2 = pRepository.save(updatedPost);
+            logger.info(" post Updated Successfully.. with post Id' : "+id);
+            return post2;
+        }catch(Exception e) {
+        	logger.severe("post failed to updated ! with post Id' :"+id);
+        	throw e;
+        }
+    }
+
+    @Override
+    public void likesInPost(int postId, int userId) {
+    	Post post = pRepository.findById(postId).orElseThrow(()-> new ResourceNotFoundException("Post","Id",postId));
+    	User user = uRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User","Id",userId));
+    	if(post.getLikes().contains(user)) {
+    		post.getLikes().remove(user);
+    		post.setLikesCounter(post.getLikesCounter()-1);
+    		pRepository.save(post);
+    		
+    	}
+    	else {
+    		post.getLikes().add(user);
+    		post.setLikesCounter(post.getLikesCounter()+1);
+    		pRepository.save(post);
+    	}
+    }
+
+    @Override
+    public void commentInPost(int postId, int userId,String content) {
+    	Post post = pRepository.findById(postId).orElseThrow(()-> new ResourceNotFoundException("Post","Id",postId));
+    	User user = uRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User","Id",userId));
+    	post.setUser(user);
+    	post.setContent(content);
+    	post.setCommentCounter(post.getCommentCounter()+1);
+    	pRepository.save(post);
+
+    }
+
+    @Override
+    public void unLikedPost(int postId, int userId) {
+    	Post post = pRepository.findById(postId).orElseThrow(()-> new ResourceNotFoundException("Post","Id",postId));
+    	User user = uRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User","Id",userId));
+    	if(post.getLikes().contains(user)) {
+    		post.getLikes().remove(user);
+    		post.setLikesCounter(post.getLikesCounter()-1);
+    		pRepository.save(post);
+    		
+    	}
+    	else {
+    		post.getLikes().add(user);
+    		post.setLikesCounter(post.getLikesCounter()+1);
+    		pRepository.save(post);
+    	}
+    }
+
+    @Override
+    public void updateCommentPost(int postId, int userId,String content) {
+    	Post post = pRepository.findById(postId).orElseThrow(()-> new ResourceNotFoundException("Post","Id",postId));
+    	User user = uRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User","Id",userId));
+    	try {
+    		if(post.getUser()==user) {
+        		post.setContent(content);
+            	pRepository.save(post);
+            	logger.info(String.format("post updated.. successfully. with userId : %d and userName : %s and postId : %d", user.getUserId(), user.getUserName(), post.getPostId()));
+
+        	}
+    	}catch(Exception e) {
+    		logger.severe("post updation is failed!");
+    	}
+    	
+    	
+    }
+
+    @Override
+    public void deleteCommentPost(int postId, int userId) {
+    	Post post = pRepository.findById(postId).orElseThrow(()-> new ResourceNotFoundException("Post","Id",postId));
+    	User user = uRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User","Id",userId));
+    	try {
+    		  if(post.getUser()==user) {
+    			    post.getComments().remove(post.getContent());
+    			    post.setCommentCounter(post.getCommentCounter()-1);
+    			    logger.info(String.format("post deleted.. successfully. with userId : %d and userName : %s and postId : %d ",user.getUserId(),user.getUserName(),post.getPostId()));
+    		  }
+    	}catch(Exception e) {
+    		logger.info("post deletion unsuccessful. !");
+    	}
+    }
+}
