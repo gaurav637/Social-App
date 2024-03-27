@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.socialmediaApplication.Payload.ApiResponse;
-import com.socialmediaApplication.Payload.getUserByEmailDto;
 import com.socialmediaApplication.Payload.userDto;
 import com.socialmediaApplication.allServices.userService;
 import jakarta.validation.Valid;
@@ -53,11 +52,22 @@ public class userController {
 		return new ApiResponse("user is deleted...", true);
 	}
 	
-	@GetMapping("get-user-by-email")
-	public ResponseEntity<getUserByEmailDto> getUserByEmailInController(@RequestBody getUserByEmailDto email) {
-		getUserByEmailDto us = this.uService.getUserByemail(email);
-		return new ResponseEntity<getUserByEmailDto>(us,HttpStatus.OK);
+    @PostMapping("/users/{followersId}/follow/{followingId}")
+	public ResponseEntity<String> followingInUserInController(@PathVariable("followersId") int userId1,@PathVariable("followingId") int userId2) {
+		String str = this.uService.followInUser(userId1, userId2);
+		return new ResponseEntity<String>(str,HttpStatus.OK);
 	}
-
+	
+    @GetMapping("all-followers-user/{userId}")
+    public ResponseEntity<List<userDto>> getAllFollowersInUserInController(@PathVariable("userId") int userId){
+    	List<userDto> allfollowers = this.uService.allFollowers(userId);
+    	return new ResponseEntity<List<userDto>>(allfollowers,HttpStatus.OK);
+    }
+	
+    @GetMapping("all-following-user/{userId}")
+    public ResponseEntity<List<userDto>> getAllFollowingsInUserInController(@PathVariable("userId") int userId){
+    	List<userDto> allfollowings = this.uService.allFollowing(userId);
+    	return new ResponseEntity<List<userDto>>(allfollowings,HttpStatus.OK);
+    }
 	
 }

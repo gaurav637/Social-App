@@ -1,7 +1,12 @@
 package com.socialmediaApplication.Payload;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.socialmediaApplication.Model.User;
+
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -21,7 +26,7 @@ public class userDto {
     @NotBlank(message = "user name is mandatory.")
 	private String userName;
 	
-    @Size(min = 4,max = 8, message="password must be minimum 4 character and at least 8 character")
+    @Size(min = 4,max = 20, message="password must be minimum 4 character and at least 20 character")
 	private String password;
 	
 	@Email
@@ -35,18 +40,25 @@ public class userDto {
 	@Size(max=100,message="bio maximum 100 character")
 	private String bio;
 	
-	private String dob;
+	private LocalDate dob;
 	
 	private String gender;
 	
 	private String location;
 	
+	
 	@NotBlank(message = "contact is mandotory")
 	private String contact;
 	
-	private List<Integer> following = new ArrayList<>();
+    private int followers;
 	
-	private List<Integer> followers = new ArrayList<>();
+	private int following ;
+	
+	@OneToMany
+	private List<User> allFollowers = new ArrayList<>();
+	
+	@OneToMany
+	private List<User> allFollowings = new ArrayList<>();
 	
 
 }

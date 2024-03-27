@@ -1,6 +1,7 @@
 package com.socialmediaApplication.ServiceImplementation;
 
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +9,13 @@ import org.springframework.stereotype.Service;
 import com.socialmediaApplication.Exception.ResourceNotFoundException;
 import com.socialmediaApplication.Model.User;
 import com.socialmediaApplication.Model.repository.userRepository;
-import com.socialmediaApplication.Payload.getUserByEmailDto;
 import com.socialmediaApplication.Payload.userDto;
 import com.socialmediaApplication.allServices.userService;
 
 @Service
 public class userServiceImple implements userService{
+	
+	private static final Logger logger = Logger.getLogger(userServiceImple.class.getName());
 	
 	@Autowired
 	private  userRepository uRepository;
@@ -51,8 +53,8 @@ public class userServiceImple implements userService{
         upUser.setLocation(user.getLocation());
         upUser.setGender(user.getGender());
         upUser.setFull_name(user.getFull_name());
-        upUser.setFollowing(user.getFollowing());
-        upUser.setFollowers(user.getFollowers());
+        //upUser.setFollowing(user.getFollowing());
+       // upUser.setFollowers(user.getFollowers());
         upUser.setEmail(user.getEmail());
         upUser.setDob(user.getDob());
         upUser.setContact(user.getContact());
@@ -78,10 +80,41 @@ public class userServiceImple implements userService{
 		return userdto;
 	}
 
+
 	@Override
-	public getUserByEmailDto getUserByemail(getUserByEmailDto email) {
-		getUserByEmailDto user = uRepository.findUserByEmail(email);
-		return user;
+	public String followInUser(int followUserId, int followingUserId) {
+		User user1 = uRepository.findById(followingUserId).orElseThrow(()-> new ResourceNotFoundException("User","id",followingUserId));
+		User user2 = uRepository.findById(followUserId).orElseThrow(()-> new ResourceNotFoundException("User","Id",followUserId));
+		if(user2.getAllFollowers().contains(user1)) {
+			user2.getAllFollowers().remove(user1);
+			user2.setFollowers(user2.getFollowers()-1);
+			user1.setFollowing(user1.getFollowing()-1);
+			uRepository.save(user2);
+			uRepository.save(user1);
+			return String.format("user : %s unfollow this user : %s", user1.getFull_name(), user2.getFull_name());
+
+		}
+		else {
+			user2.setFollowers(user2.getFollowers()+1);
+			user1.setFollowing(user1.getFollowing()+1);
+			user2.getAllFollowers().add(user1);
+			user1.getAllFollowings().add(user2);
+			uRepository.save(user2);
+			return String.format("user : %s follow this user : %s ",user1.getFull_name(),user2.getFull_name());
+		}
+		
+	}
+
+	@Override
+	public List<userDto> allFollowers(int userId) {
+		List<userDto> allfollowers = uRepository.getAllFollowersInUser(userId);
+		return allfollowers;
+	}
+
+	@Override
+	public List<userDto> allFollowing(int userId) {
+		List<userDto> allfollowings = uRepository.getAllFollowingInUser(userId);
+		return allfollowings;
 	}
 
 	

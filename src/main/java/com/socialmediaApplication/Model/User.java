@@ -1,11 +1,13 @@
 package com.socialmediaApplication.Model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,7 +38,7 @@ public class User {
 	
 	private String bio;
 	
-	private String dob;
+	private LocalDate dob;
 	
 	private String gender;
 	
@@ -44,8 +46,14 @@ public class User {
 	
 	private String contact;
 	
-	private List<Integer> following = new ArrayList<>();
+	private int followers;
 	
-	private List<Integer> followers = new ArrayList<>();
+	private int following ;
+	
+	@OneToMany
+	private List<User> allFollowers = new ArrayList<>();
+	
+	@OneToMany
+	private List<User> allFollowings = new ArrayList<>();
 	
 }
