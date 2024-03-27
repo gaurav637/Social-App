@@ -54,23 +54,25 @@ public class postServiceImple implements postServices {
      }
 
     @Override
-    public Post updatePost(Post post, int id) {
+    public Post updatePost(Post post, int postId,int userId) {
         try {
-        	Post updatedPost = pRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Post","Id",id));
-            updatedPost.setUser(post.getUser());
-            updatedPost.setTimestamp(post.getTimestamp());
-            updatedPost.setPostId(post.getPostId());
-            updatedPost.setLocation(post.getLocation());
-            updatedPost.setLikesCounter(post.getLikesCounter());
-            updatedPost.setLikes(post.getLikes());
-            updatedPost.setContent(post.getContent());
-            updatedPost.setComments(post.getComments());
-            updatedPost.setCommentCounter(post.getCommentCounter());
-            Post post2 = pRepository.save(updatedPost);
-            logger.info(" post Updated Successfully.. with post Id' : "+id);
-            return post2;
+        	Post updatedPost = pRepository.findById(postId).orElseThrow(()-> new ResourceNotFoundException("Post","Id",postId));
+        	User user = uRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User","userId",userId));
+            	updatedPost.setUser(post.getUser());
+                updatedPost.setTimestamp(post.getTimestamp());
+                updatedPost.setPostId(post.getPostId());
+                updatedPost.setLocation(post.getLocation());
+                updatedPost.setLikesCounter(post.getLikesCounter());
+                updatedPost.setLikes(post.getLikes());
+                updatedPost.setContent(post.getContent());
+                updatedPost.setComments(post.getComments());
+                updatedPost.setCommentCounter(post.getCommentCounter());
+                Post post2 = pRepository.save(updatedPost);
+                logger.info(" post Updated Successfully.. with post Id' : "+postId);
+                return post2;
+            
         }catch(Exception e) {
-        	logger.severe("post failed to updated ! with post Id' :"+id);
+        	logger.severe("post failed to updated ! with post Id' :"+postId);
         	throw e;
         }
     }
@@ -137,6 +139,19 @@ public class postServiceImple implements postServices {
     	
     	
     }
+    
+    public void deletePost(int postId,int userId) {
+    	Post post = pRepository.findById(postId).orElseThrow(()-> new ResourceNotFoundException("Post","Id",postId));
+    	User user = uRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User","Id",userId));
+    	if(post.getUser()==user) {
+    		pRepository.delete(post);
+    		logger.info(String.format("post is deleted successfully. with userId : %d and userName : %s and postId : %d", user.getUserId(), user.getUserName(), post.getPostId()));
+
+    	}
+    	else {
+    		logger.info("post deletion failed.!");
+    	}
+    }
 
     @Override
     public void deleteCommentPost(int postId, int userId) {
@@ -144,12 +159,13 @@ public class postServiceImple implements postServices {
     	User user = uRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User","Id",userId));
     	try {
     		  if(post.getUser()==user) {
-    			    post.getComments().remove(post.getContent());
+    			    post.getComments().remove(post.getComments());
     			    post.setCommentCounter(post.getCommentCounter()-1);
-    			    logger.info(String.format("post deleted.. successfully. with userId : %d and userName : %s and postId : %d ",user.getUserId(),user.getUserName(),post.getPostId()));
+    			    pRepository.save(post);
+    			    logger.info(String.format("post comment deleted.. successfully. with userId : %d and userName : %s and postId : %d ",user.getUserId(),user.getUserName(),post.getPostId()));
     		  }
     	}catch(Exception e) {
-    		logger.info("post deletion unsuccessful. !");
+    		logger.info("post comment deletion unsuccessfull. !");
     	}
     }
 }
