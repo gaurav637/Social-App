@@ -7,7 +7,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.socialmediaApplication.Exception.ResourceNotFoundException;
+import com.socialmediaApplication.Model.Follow;
 import com.socialmediaApplication.Model.User;
+import com.socialmediaApplication.Model.repository.followRepository;
 import com.socialmediaApplication.Model.repository.userRepository;
 import com.socialmediaApplication.Payload.userDto;
 import com.socialmediaApplication.allServices.userService;
@@ -23,10 +25,25 @@ public class userServiceImple implements userService{
 	@Autowired
 	private  ModelMapper modelMap;
 
+	@Autowired
+	private followRepository followRepo;
+	
+	
+	Follow follow = new Follow();
+	
 	@Override
 	public userDto createUser(userDto userdto) {
 	    User user1 = DtoToUser(userdto);
+	    follow.setUserId(user1.getUserId());
+	    follow.setUserName(user1.getUserName());
+	    follow.setProfilePicture(user1.getProfilePicture());
+	    follow.setFull_name(user1.getFull_name());
+	    follow.setFollowing(user1.getFollowing());
+	    follow.setFollowers(user1.getFollowers());
+	    follow.setContact(user1.getContact());
+	    follow.setBio(user1.getBio());
 	    User user2 = uRepository.save(user1);
+	    followRepo.save(follow);
 		return userToDto(user2);
 	}
 
@@ -47,14 +64,11 @@ public class userServiceImple implements userService{
 	public userDto updateUser(userDto user, int id) {
 		User upUser = uRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User","Id",id));
         upUser.setUserName(user.getUserName());
-       // upUser.setUserId(user.getUserId());
         upUser.setProfilePicture(user.getProfilePicture());
         upUser.setPassword(user.getPassword());
         upUser.setLocation(user.getLocation());
         upUser.setGender(user.getGender());
         upUser.setFull_name(user.getFull_name());
-        //upUser.setFollowing(user.getFollowing());
-       // upUser.setFollowers(user.getFollowers());
         upUser.setEmail(user.getEmail());
         upUser.setDob(user.getDob());
         upUser.setContact(user.getContact());
@@ -83,39 +97,55 @@ public class userServiceImple implements userService{
 
 	@Override
 	public String followInUser(int followUserId, int followingUserId) {
-		User user1 = uRepository.findById(followingUserId).orElseThrow(()-> new ResourceNotFoundException("User","id",followingUserId));
-		User user2 = uRepository.findById(followUserId).orElseThrow(()-> new ResourceNotFoundException("User","Id",followUserId));
+		Follow user1 = followRepo.findById(followingUserId).orElseThrow(()-> new ResourceNotFoundException("Follow","id",followingUserId));
+		Follow user2 = followRepo.findById(followUserId).orElseThrow(()-> new ResourceNotFoundException("Follow","Id",followUserId));
+		User user3 = uRepository.findById(followingUserId).orElseThrow(()-> new ResourceNotFoundException("User","id",followingUserId));
+		User user4 = uRepository.findById(followUserId).orElseThrow(()-> new ResourceNotFoundException("User","Id",followUserId));	
 		if(user2.getAllFollowers().contains(user1)) {
 			user2.getAllFollowers().remove(user1);
 			user2.setFollowers(user2.getFollowers()-1);
 			user1.setFollowing(user1.getFollowing()-1);
-			uRepository.save(user2);
-			uRepository.save(user1);
-			return String.format("user : %s unfollow this user : %s", user1.getFull_name(), user2.getFull_name());
+			user4.setFollowers(user4.getFollowers()-1);
+			user3.setFollowing(user3.getFollowing()-1);
+			followRepo.save(user1);
+			followRepo.save(user2);
+			uRepository.save(user3);
+			uRepository.save(user4);
+			return String.format("user : %s-%d unfollow this user : %s-%d", user1.getFull_name(),user1.getUserId(), user2.getFull_name(),user2.getUserId());
 
 		}
 		else {
 			user2.setFollowers(user2.getFollowers()+1);
 			user1.setFollowing(user1.getFollowing()+1);
+			user4.setFollowers(user4.getFollowers()+1);
+			user3.setFollowing(user3.getFollowing()+1);
 			user2.getAllFollowers().add(user1);
 			user1.getAllFollowings().add(user2);
-			uRepository.save(user2);
+			followRepo.save(user1);
+			followRepo.save(user2);
+			uRepository.save(user3);
+			uRepository.save(user4);
 			return String.format("user : %s follow this user : %s ",user1.getFull_name(),user2.getFull_name());
 		}
 		
 	}
 
 	@Override
-	public List<userDto> allFollowers(int userId) {
-		List<userDto> allfollowers = uRepository.getAllFollowersInUser(userId);
+	public List<Follow> allFollowers(int userId) {
+		List<Follow> allfollowers = followRepo.getAllFollowersInUser(userId);
 		return allfollowers;
 	}
 
 	@Override
-	public List<userDto> allFollowing(int userId) {
-		List<userDto> allfollowings = uRepository.getAllFollowingInUser(userId);
+	public List<Follow> allFollowing(int userId) {
+		List<Follow> allfollowings = followRepo.getAllFollowingInUser(userId);
 		return allfollowings;
 	}
 
-	
+	@Override
+	public User getUserByEmailAddress(String content) {
+		User user = uRepository.getUserByEmail(content);
+		return user;
+	}
+
 }

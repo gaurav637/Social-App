@@ -54,11 +54,11 @@ public class userDto {
 	
 	private int following ;
 	
-	@OneToMany
-	private List<User> allFollowers = new ArrayList<>();
-	
-	@OneToMany
-	private List<User> allFollowings = new ArrayList<>();
+//	@OneToMany
+//	private List<User> allFollowers = new ArrayList<>();
+//	
+//	@OneToMany
+//	private List<User> allFollowings = new ArrayList<>();
 	
 
 }
