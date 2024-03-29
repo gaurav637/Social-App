@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.socialmediaApplication.Model.Follow;
+import com.socialmediaApplication.Model.User;
 import com.socialmediaApplication.Payload.ApiResponse;
 import com.socialmediaApplication.Payload.userDto;
 import com.socialmediaApplication.allServices.userService;
@@ -21,6 +25,7 @@ public class userController {
 	
 	@Autowired
 	private userService uService;
+	
 	
 	@PostMapping("new/user")
 	public ResponseEntity<userDto> createUserInController(@Valid @RequestBody userDto uDto){
@@ -59,15 +64,21 @@ public class userController {
 	}
 	
     @GetMapping("all-followers-user/{userId}")
-    public ResponseEntity<List<userDto>> getAllFollowersInUserInController(@PathVariable("userId") int userId){
-    	List<userDto> allfollowers = this.uService.allFollowers(userId);
-    	return new ResponseEntity<List<userDto>>(allfollowers,HttpStatus.OK);
+    public ResponseEntity<List<Follow>> getAllFollowersInUserInController(@PathVariable("userId") int userId){
+    	List<Follow> allfollowers = this.uService.allFollowers(userId);
+    	return new ResponseEntity<List<Follow>>(allfollowers,HttpStatus.OK);
     }
 	
     @GetMapping("all-following-user/{userId}")
-    public ResponseEntity<List<userDto>> getAllFollowingsInUserInController(@PathVariable("userId") int userId){
-    	List<userDto> allfollowings = this.uService.allFollowing(userId);
-    	return new ResponseEntity<List<userDto>>(allfollowings,HttpStatus.OK);
+    public ResponseEntity<List<Follow>> getAllFollowingsInUserInController(@PathVariable("userId") int userId){
+    	List<Follow> allfollowings = this.uService.allFollowing(userId);
+    	return new ResponseEntity<List<Follow>>(allfollowings,HttpStatus.OK);
+    }
+    
+    @GetMapping("get-user-by-email")
+    public ResponseEntity<User> getUserByEmailAddressInController(@RequestParam String email){
+    	User user = this.uService.getUserByEmailAddress(email);
+    	return new ResponseEntity<User>(user,HttpStatus.OK);
     }
 	
 }
