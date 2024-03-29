@@ -2,6 +2,7 @@ package com.socialmediaApplication.Model;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,12 +13,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class Follow {
+public class demoUser {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,11 +37,5 @@ public class Follow {
     private int followers;
 	
 	private int following ;
-	
-	@ManyToMany
-	private List<demoUser> allFollowers = new ArrayList<>();
-	
-	@ManyToMany
-	private List<demoUser> allFollowings = new ArrayList<>();
-	
+
 }

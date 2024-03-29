@@ -3,6 +3,7 @@ package com.socialmediaApplication.allServices;
 import java.util.List;
 import com.socialmediaApplication.Model.Follow;
 import com.socialmediaApplication.Model.User;
+import com.socialmediaApplication.Model.demoUser;
 import com.socialmediaApplication.Payload.userDto;
 
 public interface userService {
@@ -12,8 +13,8 @@ public interface userService {
 	public userDto updateUser(userDto user,int id);
 	public void deleteUser(int id);	
 	public String followInUser(int followUserId,int followingUserId);
-	public List<Follow> allFollowers(int userId);
-	public List<Follow> allFollowing(int userId);
+	public List<demoUser> allFollowers(int userId);
+	public List<demoUser> allFollowing(int userId);
 	public User getUserByEmailAddress(String content);
 	
 }
