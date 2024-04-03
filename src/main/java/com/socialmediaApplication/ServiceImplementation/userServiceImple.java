@@ -1,4 +1,4 @@
-package com.socialmediaApplication.ServiceImplementation;
+ package com.socialmediaApplication.ServiceImplementation;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import com.socialmediaApplication.Exception.ResourceNotFoundException;
 import com.socialmediaApplication.Model.Follow;
 import com.socialmediaApplication.Model.User;
+import com.socialmediaApplication.Model.demoUser;
 import com.socialmediaApplication.Model.repository.followRepository;
+import com.socialmediaApplication.Model.repository.userDemoRepo;
 import com.socialmediaApplication.Model.repository.userRepository;
 import com.socialmediaApplication.Payload.userDto;
 import com.socialmediaApplication.allServices.userService;
@@ -28,8 +30,15 @@ public class userServiceImple implements userService{
 	@Autowired
 	private followRepository followRepo;
 	
+	@Autowired
+	private userDemoRepo udRepo;
+	
+	demoUser dUser = new demoUser();
+	
 	
 	Follow follow = new Follow();
+	
+	
 	
 	@Override
 	public userDto createUser(userDto userdto) {
@@ -42,6 +51,17 @@ public class userServiceImple implements userService{
 	    follow.setFollowers(user1.getFollowers());
 	    follow.setContact(user1.getContact());
 	    follow.setBio(user1.getBio());
+	    
+	    dUser.setUserId(user1.getUserId());
+	    dUser.setUserName(user1.getUserName());
+	    dUser.setProfilePicture(user1.getProfilePicture());
+	    dUser.setFull_name(user1.getFull_name());
+	    dUser.setFollowing(user1.getFollowing());
+	    dUser.setFollowers(user1.getFollowers());
+	    dUser.setContact(user1.getContact());
+	    dUser.setBio(user1.getBio());
+	    
+	    udRepo.save(dUser);
 	    User user2 = uRepository.save(user1);
 	    followRepo.save(follow);
 		return userToDto(user2);
@@ -101,26 +121,36 @@ public class userServiceImple implements userService{
 		Follow user2 = followRepo.findById(followUserId).orElseThrow(()-> new ResourceNotFoundException("Follow","Id",followUserId));
 		User user3 = uRepository.findById(followingUserId).orElseThrow(()-> new ResourceNotFoundException("User","id",followingUserId));
 		User user4 = uRepository.findById(followUserId).orElseThrow(()-> new ResourceNotFoundException("User","Id",followUserId));	
+		
+		demoUser user5 = udRepo.findById(followingUserId).orElseThrow(()-> new ResourceNotFoundException("User","id",followingUserId));
+		demoUser user6 = udRepo.findById(followUserId).orElseThrow(()-> new ResourceNotFoundException("User","Id",followUserId));	
+		
 		if(user2.getAllFollowers().contains(user1)) {
 			user2.getAllFollowers().remove(user1);
 			user2.setFollowers(user2.getFollowers()-1);
 			user1.setFollowing(user1.getFollowing()-1);
 			user4.setFollowers(user4.getFollowers()-1);
 			user3.setFollowing(user3.getFollowing()-1);
+			user6.setFollowers(user6.getFollowers()-1);
+			user5.setFollowing(user5.getFollowing()-1);
 			followRepo.save(user1);
 			followRepo.save(user2);
 			uRepository.save(user3);
 			uRepository.save(user4);
+			udRepo.save(user5);
+			udRepo.save(user6);
+			
 			return String.format("user : %s-%d unfollow this user : %s-%d", user1.getFull_name(),user1.getUserId(), user2.getFull_name(),user2.getUserId());
-
 		}
 		else {
 			user2.setFollowers(user2.getFollowers()+1);
 			user1.setFollowing(user1.getFollowing()+1);
 			user4.setFollowers(user4.getFollowers()+1);
-			user3.setFollowing(user3.getFollowing()+1);
-			user2.getAllFollowers().add(user1);
-			user1.getAllFollowings().add(user2);
+			user3.setFollowing(user3.getFollowing()+1);	
+			user6.setFollowers(user6.getFollowers()+1);
+			user5.setFollowing(user5.getFollowing()+1);
+			user2.getAllFollowers().add(user5);// user3 
+			user1.getAllFollowings().add(user6);
 			followRepo.save(user1);
 			followRepo.save(user2);
 			uRepository.save(user3);
@@ -131,14 +161,14 @@ public class userServiceImple implements userService{
 	}
 
 	@Override
-	public List<Follow> allFollowers(int userId) {
-		List<Follow> allfollowers = followRepo.getAllFollowersInUser(userId);
+	public List<demoUser> allFollowers(int userId) {
+		List<demoUser> allfollowers = followRepo.getAllFollowersInUser(userId);
 		return allfollowers;
 	}
 
 	@Override
-	public List<Follow> allFollowing(int userId) {
-		List<Follow> allfollowings = followRepo.getAllFollowingInUser(userId);
+	public List<demoUser> allFollowing(int userId) {
+		List<demoUser> allfollowings = followRepo.getAllFollowingInUser(userId);
 		return allfollowings;
 	}
 

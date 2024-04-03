@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.socialmediaApplication.Model.Follow;
 import com.socialmediaApplication.Model.User;
+import com.socialmediaApplication.Model.demoUser;
 import com.socialmediaApplication.Payload.ApiResponse;
 import com.socialmediaApplication.Payload.userDto;
 import com.socialmediaApplication.allServices.userService;
@@ -63,16 +64,16 @@ public class userController {
 		return new ResponseEntity<String>(str,HttpStatus.OK);
 	}
 	
-    @GetMapping("all-followers-user/{userId}")
-    public ResponseEntity<List<Follow>> getAllFollowersInUserInController(@PathVariable("userId") int userId){
-    	List<Follow> allfollowers = this.uService.allFollowers(userId);
-    	return new ResponseEntity<List<Follow>>(allfollowers,HttpStatus.OK);
+    @GetMapping("all-followers-user")
+    public ResponseEntity<List<demoUser>> getAllFollowersInUserInController(@RequestParam("userId") int userId){
+    	List<demoUser> allfollowers = this.uService.allFollowers(userId);
+    	return new ResponseEntity<List<demoUser>>(allfollowers,HttpStatus.OK);
     }
 	
     @GetMapping("all-following-user/{userId}")
-    public ResponseEntity<List<Follow>> getAllFollowingsInUserInController(@PathVariable("userId") int userId){
-    	List<Follow> allfollowings = this.uService.allFollowing(userId);
-    	return new ResponseEntity<List<Follow>>(allfollowings,HttpStatus.OK);
+    public ResponseEntity<List<demoUser>> getAllFollowingsInUserInController(@PathVariable("userId") int userId){
+    	List<demoUser> allfollowings = this.uService.allFollowing(userId);
+    	return new ResponseEntity<List<demoUser>>(allfollowings,HttpStatus.OK);
     }
     
     @GetMapping("get-user-by-email")
