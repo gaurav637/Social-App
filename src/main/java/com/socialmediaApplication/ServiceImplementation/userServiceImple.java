@@ -1,6 +1,5 @@
  package com.socialmediaApplication.ServiceImplementation;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -134,9 +133,6 @@ public class userServiceImple implements userService{
 			user3.setFollowing(user3.getFollowing()-1);
 			user6.setFollowers(user6.getFollowers()-1);
 			user5.setFollowing(user5.getFollowing()-1);
-			
-			
-			
 			followRepo.save(user1);
 			followRepo.save(user2);
 			uRepository.save(user3);
@@ -145,20 +141,14 @@ public class userServiceImple implements userService{
 			udRepo.save(user6);
 			
 			return String.format("user : %s-%d unfollow this user : %s-%d", user1.getFull_name(),user1.getUserId(), user2.getFull_name(),user2.getUserId());
-
 		}
 		else {
 			user2.setFollowers(user2.getFollowers()+1);
 			user1.setFollowing(user1.getFollowing()+1);
 			user4.setFollowers(user4.getFollowers()+1);
-			user3.setFollowing(user3.getFollowing()+1);
-			
+			user3.setFollowing(user3.getFollowing()+1);	
 			user6.setFollowers(user6.getFollowers()+1);
 			user5.setFollowing(user5.getFollowing()+1);
-			
-			
-			
-
 			user2.getAllFollowers().add(user5);// user3 
 			user1.getAllFollowings().add(user6);
 			followRepo.save(user1);

@@ -83,6 +83,8 @@ public class postController {
 		this.pServices.deleteCommentPost(postId, userId);
 		return new ApiResponse(String.format("delete in post comment. with user Id' : %d and post Id' : %d"+userId,postId),true);
 	}
+	
+	
 }
 
 

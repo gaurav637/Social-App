@@ -23,3 +23,4 @@ public interface followRepository extends JpaRepository<Follow, Integer>{
 	public List<demoUser> getAllFollowingInUser(int userId);
 
 }
+
