@@ -12,8 +12,8 @@ public interface commentServices {
 	public Comments createComments(int userId,int postId,String content) throws Exception;
 	public Comments updateComments(int commentId,int userId,int postId,String content) throws Exception;
 	public ApiResponse deleteComment(int userId,int postId,int commentId);
-	public ApiResponse likeComment(int userId,int commentId);
+	public ApiResponse likeComment(int userId,int commentId);	
 	public ApiResponse unLikeComment(int userId ,int commentId);
-    public List<demoUser> allUserLikeInComments(int commentId);
+    //public List<demoUser> allUserLikeInComments(int commentId);
    
 }
