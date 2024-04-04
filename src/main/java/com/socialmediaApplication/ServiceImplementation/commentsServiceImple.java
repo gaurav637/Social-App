@@ -31,8 +31,6 @@ public class commentsServiceImple implements commentServices {
 	private postRepository pRepository;
 	
 	
-	private Comments comments = new Comments();
-	
 	@Autowired
 	private userDemoRepo dUser;
 
@@ -52,22 +50,18 @@ public class commentsServiceImple implements commentServices {
 	public Comments createComments(int userId, int postId, String content) throws Exception {
 		User user = uRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("user","Id",userId));
 		Post post = pRepository.findById(postId).orElseThrow(()-> new ResourceNotFoundException("post","postId",postId));
-		int n = user.getUserId();
-		int m = post.getUser().getUserId();
-		if(n==m) {
 			 post.setCommentCounter(post.getCommentCounter()+1);
-			 post.setContent(content);
+			 Comments comments = new Comments();
+			 comments.setContent(content);
 			 comments.setAuthor(user.getUserName());
 			 comments.setUserId(user.getUserId());
 			 comments.setPost(post.getContent());
 			 comments.setPostId(post.getPostId());
 			 comments.setTimestamp(LocalDateTime.now());
 			 Comments comm = cRepository.save(comments);
+			 pRepository.save(post);
 			 return comm;
-		}
-	   
-		throw new Exception(String.format("post - postId : %d , and user : %s or , userId : %d not create this post"+ post.getPostId(),user.getUserName(),user.getUserId()));
-	}
+			}
 
 	@Override
 	public Comments updateComments(int commentId, int userId, int postId, String content)throws Exception {
@@ -98,7 +92,7 @@ public class commentsServiceImple implements commentServices {
 		if(a1==b1) {
 			cRepository.delete(comm);
 		}
-		return new ApiResponse(String.format("post - postId : %d , and user : %s or , userId : %d not create this post"+ post.getPostId(),user.getUserName(),user.getUserId()),false);
+		return new ApiResponse(String.format("post - postId : %d , and user : %s or , userId : %d not create this post", post.getPostId(),user.getUserName(),user.getUserId()),false);
 	}
 
 	@Override
@@ -112,11 +106,13 @@ public class commentsServiceImple implements commentServices {
 			return new ApiResponse("likes comment",true);
 
 		}
-		comm.setLikesCounter(comm.getLikesCounter()-1);
-		comm.getAllLikesUser().remove(comm);
-		cRepository.save(comm);
-        return 	new ApiResponse("unlike comment because user already like comment",false);
-		
+		else {
+			comm.setLikesCounter(comm.getLikesCounter()-1);
+			comm.getAllLikesUser().remove(user);
+			cRepository.save(comm);
+	        return 	new ApiResponse("unlike comment because user already like comment",false);
+			
+		}
 	}
 
 	@Override
@@ -131,17 +127,17 @@ public class commentsServiceImple implements commentServices {
 
 		}
 		comm.setLikesCounter(comm.getLikesCounter()-1);
-		comm.getAllLikesUser().remove(comm);
+		comm.getAllLikesUser().remove(user);
 		cRepository.save(comm);
         return 	new ApiResponse("unlike comment",true);
 		
 	}
 
-	@Override
-	public List<demoUser> allUserLikeInComments(int commentId) {
-		//List<demoUser> allUser = cRepository.
-		return null;
-	}
+//	@Override
+//	public List<demoUser> allUserLikeInComments(int commentId) {
+//		//List<demoUser> allUser = cRepository.
+//		return null;
+//	}
 
 
 }
