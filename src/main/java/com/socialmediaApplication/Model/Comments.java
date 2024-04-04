@@ -3,10 +3,14 @@ package com.socialmediaApplication.Model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.socialmediaApplication.Payload.demoUser;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,7 +24,6 @@ import lombok.Setter;
 @Setter
 @Table(name="comments")
 public class Comments {
-	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,8 +45,9 @@ public class Comments {
 	
 	private int postId;
 	
+	@ManyToMany
 	private List<demoUser> allLikesUser = new ArrayList<>();
 	
-	private List<demoUser> pinComments = new ArrayList<>();
+
 
 }

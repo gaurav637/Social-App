@@ -8,10 +8,12 @@ import com.socialmediaApplication.Exception.ResourceNotFoundException;
 import com.socialmediaApplication.Model.Comments;
 import com.socialmediaApplication.Model.Post;
 import com.socialmediaApplication.Model.User;
-import com.socialmediaApplication.Model.demoUser;
 import com.socialmediaApplication.Model.repository.commentRepository;
 import com.socialmediaApplication.Model.repository.postRepository;
+import com.socialmediaApplication.Model.repository.userDemoRepo;
 import com.socialmediaApplication.Model.repository.userRepository;
+import com.socialmediaApplication.Payload.ApiResponse;
+import com.socialmediaApplication.Payload.demoUser;
 import com.socialmediaApplication.allServices.commentServices;
 
 
@@ -28,8 +30,11 @@ public class commentsServiceImple implements commentServices {
 	@Autowired
 	private postRepository pRepository;
 	
+	
+	private Comments comments = new Comments();
+	
 	@Autowired
-	private Comments comments;
+	private userDemoRepo dUser;
 
 	@Override
 	public Comments getCommentById(int commentId) {
@@ -57,8 +62,8 @@ public class commentsServiceImple implements commentServices {
 			 comments.setPost(post.getContent());
 			 comments.setPostId(post.getPostId());
 			 comments.setTimestamp(LocalDateTime.now());
-			 cRepository.save(comments);
-			 return comments;
+			 Comments comm = cRepository.save(comments);
+			 return comm;
 		}
 	   
 		throw new Exception(String.format("post - postId : %d , and user : %s or , userId : %d not create this post"+ post.getPostId(),user.getUserName(),user.getUserId()));
@@ -74,41 +79,69 @@ public class commentsServiceImple implements commentServices {
 		if(n==m) {
 			comm.setContent(content);
 			comm.setUpdateDate(LocalDateTime.now());
-			cRepository.save(comm);
-			return comm;
+			Comments updatedComments =  cRepository.save(comm);
+			return updatedComments ;
 		}
 		
 		throw new Exception(String.format("post - postId : %d , and user : %s or , userId : %d not create this post"+ post.getPostId(),user.getUserName(),user.getUserId()));
 	}
 
 	@Override
-	public void deleteComment(int userId, int postId, int commentId) {
-		// TODO Auto-generated method stub
+	public ApiResponse deleteComment(int userId, int postId, int commentId) {
+		User user = uRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("user","Id",userId));
+		Post post = pRepository.findById(postId).orElseThrow(()-> new ResourceNotFoundException("post","postId",postId));
+		Comments comm = cRepository.findById(commentId).orElseThrow(()-> new ResourceNotFoundException("Comments","CommentId",commentId));
+		
+		int a1 = user.getUserId();
+		int b1 = post.getUser().getUserId();
+		
+		if(a1==b1) {
+			cRepository.delete(comm);
+		}
+		return new ApiResponse(String.format("post - postId : %d , and user : %s or , userId : %d not create this post"+ post.getPostId(),user.getUserName(),user.getUserId()),false);
+	}
+
+	@Override
+	public ApiResponse likeComment(int userId, int commentId) {
+		demoUser user = dUser.findById(userId).orElseThrow(()-> new ResourceNotFoundException("demoUser","Id",userId));
+		Comments comm = cRepository.findById(commentId).orElseThrow(()-> new ResourceNotFoundException("Comments","CommentId",commentId));
+		if(!comm.getAllLikesUser().contains(user)) {
+			comm.setLikesCounter(comm.getLikesCounter()+1);
+			comm.getAllLikesUser().add(user);
+			cRepository.save(comm);
+			return new ApiResponse("likes comment",true);
+
+		}
+		comm.setLikesCounter(comm.getLikesCounter()-1);
+		comm.getAllLikesUser().remove(comm);
+		cRepository.save(comm);
+        return 	new ApiResponse("unlike comment because user already like comment",false);
 		
 	}
 
 	@Override
-	public void likeComment(int userId, int commentId) {
-		// TODO Auto-generated method stub
+	public ApiResponse unLikeComment(int userId, int commentId) {
+		demoUser user = dUser.findById(userId).orElseThrow(()-> new ResourceNotFoundException("demoUser","Id",userId));
+		Comments comm = cRepository.findById(commentId).orElseThrow(()-> new ResourceNotFoundException("Comments","CommentId",commentId));
+		if(!comm.getAllLikesUser().contains(user)) {
+			comm.setLikesCounter(comm.getLikesCounter()+1);
+			comm.getAllLikesUser().add(user);
+			cRepository.save(comm);
+			return new ApiResponse("likes comment because user not like this comments",false);
+
+		}
+		comm.setLikesCounter(comm.getLikesCounter()-1);
+		comm.getAllLikesUser().remove(comm);
+		cRepository.save(comm);
+        return 	new ApiResponse("unlike comment",true);
 		
 	}
 
 	@Override
-	public void unLikeComment(int userId, int commentId) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public List<demoUser> allUserLikeInComments() {
-		// TODO Auto-generated method stub
+	public List<demoUser> allUserLikeInComments(int commentId) {
+		//List<demoUser> allUser = cRepository.
 		return null;
 	}
 
-	@Override
-	public void pinComments() {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

@@ -47,5 +47,4 @@ public class User {
 	
 	private int following;
 	
-	
 }

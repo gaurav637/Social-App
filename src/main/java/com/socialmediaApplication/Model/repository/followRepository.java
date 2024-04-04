@@ -4,8 +4,9 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import com.socialmediaApplication.Model.Follow;
-import com.socialmediaApplication.Model.demoUser;
+
+import com.socialmediaApplication.Payload.Follow;
+import com.socialmediaApplication.Payload.demoUser;
 
 
 public interface followRepository extends JpaRepository<Follow, Integer>{

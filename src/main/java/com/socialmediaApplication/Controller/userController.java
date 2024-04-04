@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.socialmediaApplication.Model.Follow;
 import com.socialmediaApplication.Model.User;
-import com.socialmediaApplication.Model.demoUser;
 import com.socialmediaApplication.Payload.ApiResponse;
+import com.socialmediaApplication.Payload.Follow;
+import com.socialmediaApplication.Payload.demoUser;
 import com.socialmediaApplication.Payload.userDto;
 import com.socialmediaApplication.allServices.userService;
 import jakarta.validation.Valid;

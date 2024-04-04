@@ -54,34 +54,34 @@ public class postController {
 		return new ApiResponse("post delete successfull",true);
 	}
 	
-	@PostMapping("like-post/{postId}/{userId}")
+	@PostMapping("like-post/{postId}/user/{userId}")
 	public ApiResponse likesPostInController(@PathVariable("postId") int postId,@PathVariable("userId") int userId) {
 		this.pServices.likesInPost(postId, userId);
-		return new ApiResponse(String.format("like is post.. with user Id' : %d and post Id' : %d"+userId,postId),true);
+		return new ApiResponse(String.format("like is post.. with user Id' : %d and post Id' : %d",userId,postId),true);
 	}
 	
-	@PostMapping("comment-post/{postId}/{userId}")
+	@PostMapping("comment-post/{postId}/user/{userId}")
 	public ApiResponse commentsInPostInController(@PathVariable("postId") int postId,@PathVariable("userId") int userId,@RequestParam(value="content") String content){
 		this.pServices.commentInPost(postId, userId, content);
-		return new ApiResponse(String.format("comment in post : %s userID : %d postId : %d"+content,userId,postId),true);
+		return new ApiResponse(String.format("comment in post : %s userID : %d postId : %d",content,userId,postId),true);
 	}
 	
-	@PostMapping("unlike-in-post")
+	@PostMapping("unlike-in-post/{postId}/user/{userId}")
 	public ApiResponse unlikeInPostInController(@PathVariable("postId") int postId,@PathVariable("userId") int userId) {
 		this.pServices.unLikedPost(postId, userId);
-		return new ApiResponse(String.format("unlike in post..  with user Id' : %d and post Id' : %d"+userId,postId),true);
+		return new ApiResponse(String.format("unlike in post..  with user Id' : %d and post Id' : %d",userId,postId),true);
 	}
 	
-	@PostMapping("update-in-post")
+	@PostMapping("update-in-comment-post/{postId}/user/{userId}")
 	public ApiResponse updateConmmentInController(@PathVariable("postId") int postId,@PathVariable("userId") int userId,@RequestParam(value="content") String content){
 		this.pServices.updateCommentPost(postId, userId, content);
 	    return new ApiResponse(String.format("updated in post comment. new comment : %s and user Id' : %d , post Id' : %d",content,userId,postId),true);
 	}
 	
-	@PostMapping("delete-in-comment-post")
+	@PostMapping("delete-in-comment-post/{postId}/user/{userId}")
 	public ApiResponse deleteCommentInController(@PathVariable("postId") int postId,@PathVariable("userId") int userId) {
 		this.pServices.deleteCommentPost(postId, userId);
-		return new ApiResponse(String.format("delete in post comment. with user Id' : %d and post Id' : %d"+userId,postId),true);
+		return new ApiResponse(String.format("delete in post comment. with user Id' : %d and post Id' : %d",userId,postId),true);
 	}
 	
 	

@@ -7,12 +7,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.socialmediaApplication.Exception.ResourceNotFoundException;
-import com.socialmediaApplication.Model.Follow;
 import com.socialmediaApplication.Model.User;
-import com.socialmediaApplication.Model.demoUser;
 import com.socialmediaApplication.Model.repository.followRepository;
 import com.socialmediaApplication.Model.repository.userDemoRepo;
 import com.socialmediaApplication.Model.repository.userRepository;
+import com.socialmediaApplication.Payload.Follow;
+import com.socialmediaApplication.Payload.demoUser;
 import com.socialmediaApplication.Payload.userDto;
 import com.socialmediaApplication.allServices.userService;
 
