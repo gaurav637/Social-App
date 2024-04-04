@@ -1,5 +1,6 @@
 package com.socialmediaApplication.ServiceImplementation;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,12 @@ public class postServiceImple implements postServices {
     @Override
     public Post createPost(Post post) {
         try {
+        	
             Post newPost = pRepository.save(post);
+            newPost.setTimestamp(LocalDateTime.now());
+            Post nPost =  pRepository.save(newPost);
             logger.info("Post Created Successfully with Id : " + newPost.getPostId());
-            return newPost;
+            return nPost;
         } catch (Exception e) {
             logger.severe("Failed to create post: " + e.getMessage());
             throw e;
@@ -60,13 +64,8 @@ public class postServiceImple implements postServices {
         	User user = uRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User","userId",userId));
             	updatedPost.setUser(post.getUser());
                 updatedPost.setTimestamp(post.getTimestamp());
-                updatedPost.setPostId(post.getPostId());
                 updatedPost.setLocation(post.getLocation());
-                updatedPost.setLikesCounter(post.getLikesCounter());
-                updatedPost.setLikes(post.getLikes());
                 updatedPost.setContent(post.getContent());
-                updatedPost.setComments(post.getComments());
-                updatedPost.setCommentCounter(post.getCommentCounter());
                 Post post2 = pRepository.save(updatedPost);
                 logger.info(" post Updated Successfully.. with post Id' : "+postId);
                 return post2;
@@ -99,7 +98,8 @@ public class postServiceImple implements postServices {
     	Post post = pRepository.findById(postId).orElseThrow(()-> new ResourceNotFoundException("Post","Id",postId));
     	User user = uRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User","Id",userId));
     	post.setUser(user);
-    	post.setContent(content);
+    	post.getComments().add(user);
+    	//post.setContent(content);
     	post.setCommentCounter(post.getCommentCounter()+1);
     	pRepository.save(post);
 
@@ -128,7 +128,8 @@ public class postServiceImple implements postServices {
     	User user = uRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User","Id",userId));
     	try {
     		if(post.getUser()==user) {
-        		post.setContent(content);
+        		//post.setContent(content);
+    			post.getComments().add(user);
             	pRepository.save(post);
             	logger.info(String.format("post updated.. successfully. with userId : %d and userName : %s and postId : %d", user.getUserId(), user.getUserName(), post.getPostId()));
 

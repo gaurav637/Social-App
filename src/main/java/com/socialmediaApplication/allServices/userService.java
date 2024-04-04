@@ -1,9 +1,10 @@
 package com.socialmediaApplication.allServices;
 
 import java.util.List;
-import com.socialmediaApplication.Model.Follow;
+
 import com.socialmediaApplication.Model.User;
-import com.socialmediaApplication.Model.demoUser;
+import com.socialmediaApplication.Payload.Follow;
+import com.socialmediaApplication.Payload.demoUser;
 import com.socialmediaApplication.Payload.userDto;
 
 public interface userService {
