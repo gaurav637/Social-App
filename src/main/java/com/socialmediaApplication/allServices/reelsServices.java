@@ -17,5 +17,6 @@ public interface reelsServices {
 	public ApiResponse unlikeReels(int userId,int reelsId);
 	public reelsDto commentInReels(int userId,int reelsId,String content);
 	public ApiResponse deslikeInReels(int userId,int reelId);
+	public ApiResponse viewInReels(int userId, int reelId);
 	
 }

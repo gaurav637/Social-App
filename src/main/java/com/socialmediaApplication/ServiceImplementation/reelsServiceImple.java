@@ -3,6 +3,8 @@ package com.socialmediaApplication.ServiceImplementation;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.socialmediaApplication.Exception.ResourceNotFoundException;
 import com.socialmediaApplication.Model.Reels;
 import com.socialmediaApplication.Model.User;
@@ -14,6 +16,8 @@ import com.socialmediaApplication.Payload.demoUser;
 import com.socialmediaApplication.Payload.reelsDto;
 import com.socialmediaApplication.allServices.reelsServices;
 
+
+@Service
 public class reelsServiceImple implements reelsServices{
 	
 	@Autowired
@@ -40,6 +44,7 @@ public class reelsServiceImple implements reelsServices{
 		reel1.setDescription(reels.getDescription());
 		reel1.setCommentCounter(reels.getCommentCounter());
 		reel1.setDislike(reels.getDislike());
+		reel1.setViewsCounter(reels.getViewsCounter());
 		Reels newReels = eRepository.save(reel1);
 		return newReels;
 	}
@@ -163,5 +168,18 @@ public class reelsServiceImple implements reelsServices{
 			return new ApiResponse("Reels Dislike",true);
 		}
 	}
+
+	@Override
+	public ApiResponse viewInReels(int userId, int reelId) {
+		demoUser user = ud.findById(userId).orElseThrow(()-> new ResourceNotFoundException("demoUser","userId",userId));
+		Reels reel = eRepository.findById(reelId).orElseThrow(()-> new ResourceNotFoundException("Reels","ReelsId",reelId));
+		if(!reel.getViewReels().contains(user)) {
+			reel.setViewsCounter(reel.getViewsCounter()+1);
+			return new ApiResponse("user views reels",true);
+		}
+		return new ApiResponse("user views reels",true);
+	}
+	
+	
 
 }

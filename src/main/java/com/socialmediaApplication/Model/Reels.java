@@ -50,13 +50,17 @@ public class Reels {
 	
 	private String location;
 	
-	@Transient
+	//@Transient
 	@ManyToMany
 	private List<demoUser> likes = new ArrayList<>();
 	
-	@Transient
+	//@Transient
 	@ManyToMany
 	private List<demoUser> dislikes = new ArrayList<>();
+	
+	//@Transient
+	@ManyToMany
+	private List<demoUser> viewReels = new ArrayList<>();
 	
 
 }
