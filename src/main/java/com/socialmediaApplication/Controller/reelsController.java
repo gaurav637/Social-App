@@ -47,7 +47,7 @@ public class reelsController {
 		return new ResponseEntity<List<Reels>>(allReels,HttpStatus.OK);
 	}
 	
-	@PutMapping("update-reels/{reelId}/{userId}")
+	@PutMapping("update-reels/{reelId}/user/{userId}")
 	public ResponseEntity<Reels> updateReelsInUser(
 			@PathVariable("reelId") int reelId,
 			@PathVariable("userId") int userId,
@@ -80,7 +80,7 @@ public class reelsController {
 		return new ResponseEntity<ApiResponse>(response,HttpStatus.OK);
 	}
 	
-	@PostMapping("comment-in-likes/user/{userId}/reels/{reelsId}")
+	@PostMapping("comment-in-reels/user/{userId}/reels/{reelsId}")
 	public ResponseEntity<reelsDto> commentInReels(
 			@PathVariable("userId") int userId,
 			@PathVariable("reelsId") int reelId,
@@ -96,6 +96,14 @@ public class reelsController {
 			@PathVariable("userId") int userId,
 			@PathVariable("reelsId") int reelsId){
 		ApiResponse response = this.rServices.deslikeInReels(userId, reelsId);
+		return new ResponseEntity<ApiResponse>(response,HttpStatus.OK);
+	}
+	
+	@PostMapping("view-in-reels/user/{userId}/reels/{reelsId}")
+	public ResponseEntity<ApiResponse> viewsInReelsInUser(
+			@PathVariable("userId") int userId,
+			@PathVariable("reelsId") int reelId){
+		ApiResponse response = this.rServices.viewInReels(userId, reelId);
 		return new ResponseEntity<ApiResponse>(response,HttpStatus.OK);
 	}
 	

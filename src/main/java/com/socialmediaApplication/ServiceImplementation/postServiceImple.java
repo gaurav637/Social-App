@@ -99,7 +99,6 @@ public class postServiceImple implements postServices {
     	User user = uRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User","Id",userId));
     	post.setUser(user);
     	post.getComments().add(user);
-    	//post.setContent(content);
     	post.setCommentCounter(post.getCommentCounter()+1);
     	pRepository.save(post);
 
