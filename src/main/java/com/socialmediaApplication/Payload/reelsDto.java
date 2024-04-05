@@ -1,0 +1,18 @@
+package com.socialmediaApplication.Payload;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class reelsDto {
+	
+	private String userName;
+	
+	private String comment;
+
+}
