@@ -33,5 +33,5 @@ MySQL can be used as the database for this project. The database connection can 
 db.url=jdbc:mysql://[ip address of db]:[port of db]/database_name
 db.username=[username]
 db.password=[password, if any]
-
-![ER-Diagram]
+```
+![ER-Diagram](socialMedia-Er.mwb"Social-Media-App")
