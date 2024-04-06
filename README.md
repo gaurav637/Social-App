@@ -41,5 +41,10 @@ db.password=[password, if any]
 
 
 
-![Er-Diagram]("Social-App")
+
+
+
+
+
+![Er-Diagram](https://github.com/gaurav637/Social-Media-App/blob/master/SocialMedialApp.drawio.png"Social-App")
 ![SocialMedialApp drawio](https://github.com/gaurav637/Social-Media-App/assets/141955844/8e183f57-1f0d-435e-af49-0ac7de988ead)
