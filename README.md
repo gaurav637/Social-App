@@ -88,7 +88,7 @@ db.password=[password, if any]
 
 
 
-## Swagger UI:
+## Swagger UI (http://localhost:8081/swagger-ui/index.html):
 
 
 
