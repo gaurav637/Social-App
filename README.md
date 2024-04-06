@@ -24,13 +24,16 @@ The Social Media Application is a comprehensive platform designed to facilitate 
 - **Spring Web**: Provides HTTP request handling capabilities.
 - **RESTful APIs**: Design and implement RESTful APIs for communication with the frontend.
 
-##Installation
+## Quickstart
 ### 1. clone the repository
  ```base
  https://github.com/gaurav637/Social-Media-App
 ```
 
-### Configure the database connection in application.properties:
+### 2. Open the project in your IDE:  Eclipse (recommended) or IntelliJ IDEA
+If you are using Eclipse, make sure the IDE opens project as Maven and recognizes the project as a Spring Boot project. 
+
+### 3. Configure the database connection in application.properties:
 
 MySQL can be used as the database for this project. The database connection can be configured in the application.properties file, with the appropriate values for the following properties: (you'd better use another username not root)
 
@@ -39,6 +42,14 @@ db.url=jdbc:mysql://[ip address of db]:[port of db]/database_name
 db.username=[username]
 db.password=[password, if any]
 ```
+
+### 4. Run the project (by running the main method in Spring Boot App)
+
+### 5. open http://localhost:8081/in your browser!
+       Log in as a normal user:
+          Username: admin
+          Password: 87654321
+
 ![ER-Model](https://github.com/gaurav637/Social-Media-App/blob/master/Untitled.mwb"Social-Media-App")
 
 
