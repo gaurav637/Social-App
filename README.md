@@ -23,7 +23,6 @@ The Social Media Application is a comprehensive platform designed to facilitate 
 - **Maven**: Dependency management tool for Java projects.
 - **Spring Web**: Provides HTTP request handling capabilities.
 - **RESTful APIs**: Design and implement RESTful APIs for communication with the frontend.
-- **Thymeleaf**: Java-based template engine for server-side rendering.
 
 
 ## Database
@@ -34,3 +33,5 @@ MySQL can be used as the database for this project. The database connection can 
 db.url=jdbc:mysql://[ip address of db]:[port of db]/database_name
 db.username=[username]
 db.password=[password, if any]
+
+![ER-Diagram]
