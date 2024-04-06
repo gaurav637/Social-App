@@ -26,4 +26,12 @@ The Social Media Application is a comprehensive platform designed to facilitate 
 - **Thymeleaf**: Java-based template engine for server-side rendering.
 
 
+## Database
 
+MySQL can be used as the database for this project. The database connection can be configured in the application.properties file, with the appropriate values for the following properties: (you'd better use another username not root)
+
+'''SQL
+    db.url=jdbc:mysql://[ip address of db]:[port of db]/database_name
+    db.username=[username]
+    db.password=[password, if any]
+'''
