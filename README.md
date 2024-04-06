@@ -23,6 +23,17 @@ The Social Media Application is a comprehensive platform designed to facilitate 
 - **Maven**: Dependency management tool for Java projects.
 - **Spring Web**: Provides HTTP request handling capabilities.
 - **RESTful APIs**: Design and implement RESTful APIs for communication with the frontend.
+- **Swagger**: Documentation of Api.
+
+## Requirements
+
+** 1. Java Development Kit (JDK)**
+** 2. Maven**
+** 3. Database(MYSQL)**
+** 4. Eclipse IDE**
+** 5. Postman**
+** 6. Workbench**
+
 
 ## Quickstart
 ### 1. clone the repository
@@ -69,6 +80,11 @@ db.password=[password, if any]
 
 
 
+
+## Postman
+
+
+<img width="1272" alt="Screenshot 2024-04-06 at 3 03 09 PM" src="https://github.com/gaurav637/Social-Media-App/assets/141955844/3180cafd-1303-48ff-b910-1a7d866965b1">
 
 
 
