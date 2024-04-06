@@ -27,12 +27,12 @@ The Social Media Application is a comprehensive platform designed to facilitate 
 
 ## Requirements
 
-** 1. Java Development Kit (JDK)**
-** 2. Maven**
-** 3. Database(MYSQL)**
-** 4. Eclipse IDE**
-** 5. Postman**
-** 6. Workbench**
+1. **Java Development Kit (JDK)**
+2. **Maven**
+3. **Database(MYSQL)**
+4. **Eclipse IDE**
+5. **Postman**
+6. **Workbench**
 
 
 ## Quickstart
