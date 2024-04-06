@@ -19,6 +19,8 @@ import com.socialmediaApplication.Payload.Follow;
 import com.socialmediaApplication.Payload.demoUser;
 import com.socialmediaApplication.Payload.userDto;
 import com.socialmediaApplication.allServices.userService;
+
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.validation.Valid;
 
 @RestController
@@ -52,6 +54,7 @@ public class userController {
 		return new ResponseEntity<userDto>(updateUser,HttpStatus.OK);
 	}
 	
+	// @Hidden this annotaton is hide the url in swagger ui
 	@DeleteMapping("delete-user/{userId}")
 	public ApiResponse deleteUserInController(@PathVariable("userId") int id) {
 		this.uService.deleteUser(id);
