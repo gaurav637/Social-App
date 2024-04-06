@@ -34,7 +34,12 @@ db.url=jdbc:mysql://[ip address of db]:[port of db]/database_name
 db.username=[username]
 db.password=[password, if any]
 ```
-![ER-Diagram](socialMedia-Er.mwb"Social-Media-App")
+![ER-Model](https://github.com/gaurav637/Social-Media-App/blob/master/Untitled.mwb"Social-Media-App")
 
 
 <img width="1232" alt="Screenshot 2024-04-06 at 10 38 50 AM" src="https://github.com/gaurav637/Social-Media-App/assets/141955844/2452f650-9454-42ed-92f2-5ae1b75775c1">
+
+
+
+![Er-Diagram]("Social-App")
+![SocialMedialApp drawio](https://github.com/gaurav637/Social-Media-App/assets/141955844/8e183f57-1f0d-435e-af49-0ac7de988ead)
