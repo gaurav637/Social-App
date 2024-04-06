@@ -35,3 +35,6 @@ db.username=[username]
 db.password=[password, if any]
 ```
 ![ER-Diagram](socialMedia-Er.mwb"Social-Media-App")
+
+
+<img width="1232" alt="Screenshot 2024-04-06 at 10 38 50 AM" src="https://github.com/gaurav637/Social-Media-App/assets/141955844/2452f650-9454-42ed-92f2-5ae1b75775c1">
