@@ -88,6 +88,26 @@ db.password=[password, if any]
 
 
 
+## Swagger UI:
+
+
+
+<img width="1278" alt="Screenshot 2024-04-06 at 3 15 52 PM" src="https://github.com/gaurav637/Social-Media-App/assets/141955844/29635ffa-4de0-4c77-a7ca-e2e495c8ebf4">
+
+<img width="1280" alt="Screenshot 2024-04-06 at 3 17 23 PM" src="https://github.com/gaurav637/Social-Media-App/assets/141955844/52c53ba1-8dca-45c6-984d-87d0dc348b20">
+
+
+<img width="1260" alt="Screenshot 2024-04-06 at 3 18 17 PM" src="https://github.com/gaurav637/Social-Media-App/assets/141955844/40f10d34-beae-43ff-ab68-
+ 4ac21a2147fd">
+
+ 
+<img width="1280" alt="Screenshot 2024-04-06 at 3 18 52 PM" src="https://github.com/gaurav637/Social-Media-App/assets/141955844/e94862ab-f865-46c1-b641-6f0bd7a3f02d">
+
+
+<img width="1239" alt="Screenshot 2024-04-06 at 3 19 43 PM" src="https://github.com/gaurav637/Social-Media-App/assets/141955844/ff90b059-57df-41a2-a74b-971a53c395fb">
+
+
+
 ## Contributing
 
 Contributions are welcome! Please follow these guidelines:
