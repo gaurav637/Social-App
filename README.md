@@ -24,8 +24,13 @@ The Social Media Application is a comprehensive platform designed to facilitate 
 - **Spring Web**: Provides HTTP request handling capabilities.
 - **RESTful APIs**: Design and implement RESTful APIs for communication with the frontend.
 
+##Installation
+### 1. clone the repository
+ ```base
+ https://github.com/gaurav637/Social-Media-App
+```
 
-## Database
+### Configure the database connection in application.properties:
 
 MySQL can be used as the database for this project. The database connection can be configured in the application.properties file, with the appropriate values for the following properties: (you'd better use another username not root)
 
@@ -48,3 +53,19 @@ db.password=[password, if any]
 
 ![Er-Diagram](https://github.com/gaurav637/Social-Media-App/blob/master/SocialMedialApp.drawio.png"Social-App")
 ![SocialMedialApp drawio](https://github.com/gaurav637/Social-Media-App/assets/141955844/8e183f57-1f0d-435e-af49-0ac7de988ead)
+
+
+
+
+
+
+
+
+## Contributing
+
+Contributions are welcome! Please follow these guidelines:
+- Fork the repository
+- Create a new branch (`git checkout -b feature`)
+- Make changes and commit them (`git commit -am 'Add new feature'`)
+- Push to the branch (`git push origin feature`)
+- Create a pull request
