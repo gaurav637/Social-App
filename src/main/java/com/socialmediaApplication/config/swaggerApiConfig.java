@@ -12,7 +12,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
 			title = "Social Media App (ShareZone)",
 			description = "A social media app built with Spring Boot offers a scalable and efficient platform for users to connect.",
 			contact = @Contact(
-					name = "Gaurav Negi",
+					name = "Gaurav",
 					url = "https://www.linkedin.com/in/gauravnegi91/",
 					email = "negigaurav637@gmail.com"
 					
